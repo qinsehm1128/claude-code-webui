@@ -175,7 +175,7 @@ export default function App() {
           onMobileClose={() => setIsSidebarOpen(false)}
         />
 
-        <main className="relative flex min-h-full flex-col gap-6 px-6 py-8 pb-36 lg:ml-[280px] bg-surface-cream">
+        <main className="relative flex min-h-full flex-col gap-6 px-4 sm:px-6 py-8 pb-36 lg:ml-[280px] bg-surface-cream overflow-x-hidden">
           <button
             className="fixed left-4 top-4 rounded-full border border-ink-900/10 bg-white p-2 text-ink-700 shadow-sm hover:bg-surface-tertiary lg:hidden"
             onClick={() => setIsSidebarOpen(true)}

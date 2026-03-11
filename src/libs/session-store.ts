@@ -244,6 +244,9 @@ export class SessionStore {
   }
 
   private loadSessions(): void {
+    // Reset any sessions stuck in "running" state from previous server crashes
+    this.db.run(`update sessions set status = 'idle' where status = 'running'`);
+
     const rows = this.db
       .query(
         `select id, title, claude_session_id, status, cwd, allowed_tools, last_prompt

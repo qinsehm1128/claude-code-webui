@@ -19,15 +19,19 @@ export function usePromptActions(sendEvent: (event: ClientEvent) => void) {
 
   const activeSession = activeSessionId ? sessions[activeSessionId] : undefined;
   const isRunning = activeSession?.status === "running";
+  const pendingStart = useAppStore((state) => state.pendingStart);
 
   const handleSend = useCallback(async () => {
     if (!prompt.trim()) return;
 
     if (!activeSessionId) {
+      // Guard against double-submission
+      if (pendingStart) return;
+
       let title = "";
       try {
         setPendingStart(true);
-        const response = await fetch(`/api/sessions/title?userInput=${prompt}`);
+        const response = await fetch(`/api/sessions/title?userInput=${encodeURIComponent(prompt)}`);
         const data = await response.json();
         title = data.title;
       } catch (error) {
@@ -64,6 +68,7 @@ export function usePromptActions(sendEvent: (event: ClientEvent) => void) {
     activeSession,
     activeSessionId,
     cwd,
+    pendingStart,
     prompt,
     sendEvent,
     setGlobalError,

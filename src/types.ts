@@ -1,4 +1,4 @@
-import type { SDKMessage, PermissionResult } from "@anthropic-ai/claude-agent-sdk";
+import type { SDKMessage, PermissionResult, SDKPartialAssistantMessage } from "@anthropic-ai/claude-agent-sdk";
 
 export type ClaudeSettingsEnv = {
   ANTHROPIC_AUTH_TOKEN: string;
@@ -10,29 +10,6 @@ export type ClaudeSettingsEnv = {
   API_TIMEOUT_MS: string;
   CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC: string;
 };
-
-export type UserPromptMessage = {
-  type: "user_prompt";
-  prompt: string;
-};
-
-export type StreamMessage = SDKMessage | UserPromptMessage;
-
-// Session status
-export type SessionStatus = "idle" | "running" | "completed" | "error";
-
-// Session info
-export type SessionInfo = {
-  id: string;
-  title: string;
-  status: SessionStatus;
-  claudeSessionId?: string;
-  cwd?: string;
-  createdAt: number;
-  updatedAt: number;
-};
-
-import type { SDKMessage, PermissionResult, SDKPartialAssistantMessage } from "@anthropic-ai/claude-agent-sdk";
 
 export type UserPromptMessage = {
   type: "user_prompt";

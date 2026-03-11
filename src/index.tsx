@@ -128,7 +128,6 @@ function handleClientEvent(event: ClientEvent) {
     runClaude({
       prompt: event.payload.prompt,
       session,
-      resumeSessionId: session.claudeSessionId,
       onEvent: emit,
       onSessionUpdate: (updates) => {
         sessions.updateSession(session.id, updates);
@@ -165,14 +164,6 @@ function handleClientEvent(event: ClientEvent) {
       return;
     }
 
-    if (!session.claudeSessionId) {
-      emit({
-        type: "runner.error",
-        payload: { sessionId: session.id, message: "Session has no resume id yet." }
-      });
-      return;
-    }
-
     sessions.updateSession(session.id, { status: "running", lastPrompt: event.payload.prompt });
     emit({
       type: "session.status",
@@ -184,6 +175,7 @@ function handleClientEvent(event: ClientEvent) {
       payload: { sessionId: session.id, prompt: event.payload.prompt }
     });
 
+    // Use claudeSessionId for resume if available, otherwise start fresh
     runClaude({
       prompt: event.payload.prompt,
       session,

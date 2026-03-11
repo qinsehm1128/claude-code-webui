@@ -239,8 +239,8 @@ const ToolResult = ({
       <div className="header text-accent-main-100">
         Output
       </div>
-      <div className="mt-2 rounded-xl bg-surface-tertiary p-3">
-        <pre className={`text-sm whitespace-pre-wrap break-words font-mono ${isError ? "text-red-500" : "text-ink-700"}`}>
+      <div className="mt-2 rounded-xl bg-surface-tertiary p-3 overflow-hidden">
+        <pre className={`text-sm whitespace-pre-wrap break-words font-mono overflow-x-auto ${isError ? "text-red-500" : "text-ink-700"}`}>
           {isMarkdownContent ?
             <div>
               Markdown
@@ -329,18 +329,18 @@ const ToolUseCard = ({
   };
 
   return (
-    <div className="flex flex-col gap-2 rounded-[1rem] bg-bg-300 px-3 py-2 mt-4">
-      <div className="flex flex-row items-center gap-2">
+    <div className="flex flex-col gap-2 rounded-[1rem] bg-bg-300 px-3 py-2 mt-4 overflow-hidden">
+      <div className="flex flex-row items-center gap-2 min-w-0">
         <StatusDot
           variant={statusVariant}
           isActive={isPending && showIndicator}
           isVisible={shouldShowDot}
         />
-        <div className="flex flex-row items-center gap-2 tool-use-item">
-          <span className="inline-flex items-center rounded-md text-accent py-0.5 text-sm font-medium">
+        <div className="flex flex-row items-center gap-2 tool-use-item min-w-0 overflow-hidden">
+          <span className="inline-flex items-center rounded-md text-accent py-0.5 text-sm font-medium shrink-0">
             {messageContent.name}
           </span>
-          <span className="text-sm text-muted max-w-full">
+          <span className="text-sm text-muted truncate">
             {getToolInfo()}
           </span>
         </div>
@@ -439,9 +439,9 @@ const AskUserQuestionCard = ({
 const SystemInfoCard = ({ message, showIndicator = false }: { message: SDKSystemMessage; showIndicator?: boolean }) => {
   const InfoItem = ({ name, value }: { name: string, value: string }) => {
     return (
-      <div className="text-[14px]">
+      <div className="text-[14px] min-w-0 overflow-hidden">
         <span className="mr-4 font-normal">{name}</span>
-        <span className="font-light">{value}</span>
+        <span className="font-light break-all">{value}</span>
       </div>
     )
   }
@@ -451,7 +451,7 @@ const SystemInfoCard = ({ message, showIndicator = false }: { message: SDKSystem
         <StatusDot variant="success" isActive={showIndicator} isVisible={showIndicator} />
         System Init
       </div>
-      <div className="flex flex-col bg-bg-200 border-border-100/10 rounded-xl px-4 py-2 border border-[0.5px] [&_label]:hidden bg-bg-100 space-y-1 dark:bg-bg-300">
+      <div className="flex flex-col bg-bg-200 border-border-100/10 rounded-xl px-4 py-2 border border-[0.5px] [&_label]:hidden bg-bg-100 space-y-1 dark:bg-bg-300 overflow-hidden">
         <InfoItem name={`Session ID`} value={message.session_id} />
         <InfoItem name={`Model Name`} value={message.model} />
         <InfoItem name={`Permission Mode`} value={message.permissionMode} />
@@ -545,9 +545,9 @@ export const MessageCard = function MessageCard({
       }
 
       return (
-        <div key={key} className="rounded-xl border border-ink-900/10 bg-white pb-4 pt-0 px-4 shadow-soft">
+        <div key={key} className="rounded-xl border border-ink-900/10 bg-white pb-4 pt-0 px-4 shadow-soft overflow-hidden">
           <div>Unsupported assistant block</div>
-          <pre className="mt-2 whitespace-pre-wrap text-sm text-ink-600 font-mono">
+          <pre className="mt-2 whitespace-pre-wrap break-words text-sm text-ink-600 font-mono overflow-x-auto">
             {JSON.stringify(messageContent, null, 2)}
           </pre>
         </div>
@@ -586,9 +586,9 @@ export const MessageCard = function MessageCard({
 
   // Fallback for unknown message types
   return (
-    <div className="rounded-xl border border-ink-900/10 bg-white pb-4 pt-0 px-4 shadow-soft">
+    <div className="rounded-xl border border-ink-900/10 bg-white pb-4 pt-0 px-4 shadow-soft overflow-hidden">
       <div>Unsupport message type {Math.floor(Date.now() / 1000)}</div>
-      <pre className="mt-2 whitespace-pre-wrap text-sm text-ink-600 font-mono">
+      <pre className="mt-2 whitespace-pre-wrap break-words text-sm text-ink-600 font-mono overflow-x-auto">
         {JSON.stringify(message, null, 2)}
       </pre>
     </div>
