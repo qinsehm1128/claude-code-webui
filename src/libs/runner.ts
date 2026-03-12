@@ -41,7 +41,7 @@ export async function runClaude(options: RunnerOptions): Promise<RunnerHandle> {
         prompt,
         options: {
           cwd: session.cwd ?? DEFAULT_CWD,
-          resume: resumeSessionId,
+          ...(resumeSessionId ? { resume: resumeSessionId } : {}),
           abortController,
           env: { ...process.env },
           permissionMode: "bypassPermissions",
